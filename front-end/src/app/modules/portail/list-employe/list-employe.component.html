@@ -1,0 +1,195 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6 title">
+                <h1><strong>ANNUAIRES DES EMPLOYES</strong></h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/Dashboard">Accueil</a></li>
+                    <li class="breadcrumb-item active">Liste des employés</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <div class="card-body">
+                        <table datatable [dtOptions]="dtOptions" #profileTable id="profiletable"
+                            class="row-border order-column hover stripe" *ngIf="userService.listUsers"
+                            style="width:100%">
+                            <thead>
+                                <tr>
+
+                                    <th>Nom & Prénom</th>
+                                    <th>Email</th>
+                                    <th>Fonction</th>
+                                    <th>Date de recrutement</th>
+                                    <th>Salaire</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let user of userService.listUsers">
+
+                                    <td>{{user.nom}} {{user.prenom}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>{{user.fonction}}</td>
+                                    <td>{{user.date_rec | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{user.salaire}} <span *ngIf="user.salaire">dinars</span></td>
+                                    <td class="btn-group testa">
+                                        <button (click)="onEdit(editOneEmployee, user)" type="button"
+                                            class="btn btn-edit">
+
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button (click)="deleteDataFromAPI(user._id)" type="button"
+                                            class="btn btn-danger"><i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Nom & Prénom</th>
+                                    <th>Email</th>
+                                    <th>Fonction</th>
+                                    <th>Date recrutement</th>
+                                    <th>Salaire</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <div style="padding-top: 30px;">
+                            <button type="submit" class="btn btn-add" routerLink="/dashboard/portail/add-employe">
+                                Ajouter un
+                                employé <i class="fa"></i>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<ng-template #editOneEmployee let-modal>
+
+    <div class="card-edit modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Modifier les informations de l'employé</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form [formGroup]="userService.formEdit" class="form-horizontal">
+
+            <div class="form-group" hidden>
+                <label for="id">ID :</label>
+                <br>
+                <input formControlName="id" type="text" class="form-control" required readonly>
+                <br>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-6">
+                        <label for="nom">Nom </label>
+                        <br>
+                        <input formControlName="nom" type="text" class="form-control" required
+                            [value]="userService.formEdit.controls.nom.value" readonly>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="prenom">Prénom </label>
+                        <br>
+                        <input formControlName="prenom" type="text" class="form-control" required
+                            [value]="userService.formEdit.controls.prenom.value" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+              
+
+
+
+
+
+
+                    <div class="col-sm-6">
+                        <label for="date_rec">Date de délivrance</label>
+                        <br>
+                        <input formControlName="date_cin" type="date" class="form-control"
+                            [value]="userService.formEdit.controls.date_cin.value" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-6">
+                        <label for="fonction">Fonction </label>
+                        <br>
+                        <input formControlName="fonction" type="text" class="form-control"
+                            [value]="userService.formEdit.controls.fonction.value" required>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="date_rec">Date de recrutement </label>
+                        <br>
+                        <input formControlName="date_rec" type="date" class="form-control"
+                            [value]="userService.formEdit.controls.date_rec.value" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-6">
+                        <label for="salaire">Salaire </label>
+                        <br>
+                        <input formControlName="salaire" type="number" class="form-control"
+                            [value]="userService.formEdit.controls.salaire.value" required
+                            oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="ID_CNSS">Identifiant CNSS </label>
+                        <br>
+                        <input formControlName="ID_CNSS" type="text" class="form-control"
+                            [value]="userService.formEdit.controls.ID_CNSS.value" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-6">
+                        <label for="statutConjuguale">Statut conjuguale </label>
+                        <br>
+                        <select formControlName="statutConjuguale"
+                            class="custom-select custom-select-lg mb-3 form-control"
+                            [value]="userService.formEdit.controls.statutConjuguale.value" required>
+                            <option>Célibataire</option>
+                            <option>Marié</option>
+
+                        </select>
+                    </div>
+                   
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="updateEmploye()">Enregistrer</button>
+    </div>
+
+</ng-template>

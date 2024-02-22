@@ -1,0 +1,179 @@
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4 aside-style">
+    <!-- Brand Logo -->
+    <a routerLink="/dashboard/accueil" class="brand-link aside-style">
+        <img src="/assets/image/logo.png" alt="User Self-Desk" class="brand-image img-circle elevation-3">
+        <span class="brand-text font-weight-light text-font"><strong>TAKOLOR </strong>International.</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <!-- <img src="/assets/adminlte/dist/img/user-yosra.jpg" class="img-circle elevation-2" alt="User Image"> -->
+            </div>
+            <div class="info">
+                <a href="#" class="d-block" id="testname">{{authService.loggedInUser.prenom}}
+                    {{authService.loggedInUser.nom}}</a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent nav-flat nav-legacy"
+                data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                <li class="nav-item">
+                    <a routerLink="/dashboard/accueil" class="nav-link">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Accueil
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-header">Portail RH</li>
+                <li class="nav-item has-treeview">
+                    <a routerLink="/dashboard/portail/profil" routerLinkActive="active" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Mon profil
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview" *ngIf="authService.getRole() == 'admin'">
+                    <a routerLink="/dashboard/portail/list-employe" routerLinkActive="active" class="nav-link">
+                        <i class="nav-icon fas fa-address-book"></i>
+                        <p>
+                            Annuaire des employés
+
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">Kiosque RH</li>
+                <li class="nav-item has-treeview">
+                    <a routerLink="/dashboard/kiosque/mes-demandes" routerLinkActive="active" class="nav-link">
+                        <i class="nav-icon fas fas fa-box"></i>
+                        <p>
+                            Mes demandes
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a routerLink="/dashboard/kiosque/mes-demandes/ask-for-document" routerLinkActive="active"
+                                class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Demander un document</p>
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item has-treeview">
+                            <a routerLink="/dashboard/facturation/list-clients/add-client" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Test
+                                    <i class="right fas"></i>
+                                </p>
+                            </a>
+
+                        </li> -->
+                    </ul>
+                </li>
+                
+               
+                
+               
+               
+                <li class="nav-item has-treeview" *ngIf="authService.getRole() != 'admin' ">
+                    <a routerLink="/dashboard/kiosque/consultation-document" class="nav-link"> 
+                        <i class="nav-icon fas fa-calendar-alt"></i>
+                        <p>
+                            Consultation/Validation
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    
+                </li> 
+                
+                
+                <li class="nav-item has-treeview"
+                    *ngIf="authService.getRole() == 'admin' || authService.getRole() == 'admin'">
+                    <a routerLink="/dashboard/kiosque/list-fact-documents" class="nav-link" routerLinkActive="active">
+                        <i class="nav-icon fas fa-calendar-check"></i>
+
+                        <p>
+                            Consultation/Validation
+
+                        </p>
+                    </a>
+                </li>
+
+               
+                <li class="nav-header">Congés & Absences</li>
+                <li *ngIf="authService.getRole() == 'admin'" class="nav-item has-treeview">
+                    <a class="nav-link" routerLink="/dashboard/conge/calendrier" routerLinkActive="active">
+                        <i class="nav-icon fas fa-calendar"></i>
+                         Calendrier
+                    </a>
+                </li>
+
+                
+        
+
+                <li *ngIf="authService.getRole() == 'admin'" class="nav-item has-treeview">
+                    <a routerLink="/dashboard/conge/mes-demandes" routerLinkActive="active" class="nav-link">
+                        <i class="nav-icon fas fas fa-box"></i>
+                        <p>
+                            Mes demandes
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item has-treeview"
+                    *ngIf="authService.getRole() == 'admin' || authService.getRole() == 'admin'">
+                    <a routerLink="/dashboard/conge/get-all-conge" class="nav-link" routerLinkActive="active">
+                        <i class="nav-icon fas fa-calendar-check"></i>
+
+                        <p>
+                            Consultation/Validation
+                        </p>
+                    </a>
+                </li>
+
+                <li *ngIf="authService.getRole() == 'admin'" class="nav-header">Administration/Facturation</li>
+                <li *ngIf="authService.getRole() == 'admin'" class="nav-item has-treeview">
+                    <a routerLink="/dashboard/facturation/list-clients" routerLinkActive="active" class="nav-link">
+                        <i class="nav-icon far fa-address-book"></i>
+                        <p>
+                            Liste des clients
+                        </p>
+                    </a>
+                </li>
+                <li *ngIf="authService.getRole() == 'admin'" class="nav-item has-treeview">
+                    <a routerLink="/dashboard/facturation/create-fact-document" routerLinkActive="active"
+                        class="nav-link">
+                        <i class="nav-icon fas fa-business-time"></i>
+                        <p>
+                            Générer une facture/devis
+                        </p>
+                    </a>
+                </li>
+                <li *ngIf="authService.getRole() == 'admin'" class="nav-item has-treeview">
+                    <a routerLink="/dashboard/facturation/list-fact-documents" routerLinkActive="active"
+                        class="nav-link">
+                        <i class="nav-icon fas fa-briefcase"></i>
+
+                        <p>
+                            Documents facturation
+                        </p>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+    </div>
+
+</aside>

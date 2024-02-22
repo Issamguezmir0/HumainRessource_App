@@ -1,0 +1,53 @@
+<body class="login-page bg">
+    <div class="login-box">
+        <div class="card card-outline st">
+            <!-- <div class="card-header text-center">
+                <a href="/" class="h1">RH</a>
+
+            </div> -->
+            <div class="logo">
+                <img src="../../../assets/image/logo.png" alt="" style="width: 150px;">
+            </div>
+            <div class="card-body">
+                <form ngNativeValidate [formGroup]="authService.loginForm" (ngSubmit)="onLogin()">
+                    <div class="mb-3" *ngIf="authService.errorMessage">
+                        <small class="text-danger" *ngIf="authService.errorMessage">Mot de passe ou email
+                            incorrect</small>
+                    </div>
+                    <div class="input-group mb-3 input-icons">
+                        <i class="fas fa-envelope icon"></i>
+                        <input type="email" class="form-control form-control-border border-width-2 input-field"
+                            formControlName="email" placeholder="Email" required
+                            [class.is-invalid]="this.authService.errorMessage">
+                    </div>
+                    <div class="input-group mb-3 input-icons">
+                        <i class="fas fa-lock icon"></i>
+                        <input type="password" class="form-control form-control-border border-width-2 input-field"
+                            type="password" formControlName="password" placeholder="Password" required
+                            [class.is-invalid]="this.authService.errorMessage">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <a class="float-right forgot-pass" routerLink="/forgot-password">Mot
+                                de passe
+                                oublié ?</a>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-block log-button">LOGIN</button>
+                        </div>
+                        <!-- <div class="col-4">
+                            <button type="button" (click)="logout()" class="btn btn-primary btn-block">logout</button>
+                        </div> -->
+
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</body>

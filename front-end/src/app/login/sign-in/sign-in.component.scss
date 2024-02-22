@@ -1,0 +1,70 @@
+.bg {
+  background: #284889;
+  background: rgba(40, 72, 137, 1);
+  background-image: url(../../../assets/image/bg.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.logo {
+  text-align: center;
+}
+
+.st {
+  background: #ffffff !important;
+  background: rgba(255, 255, 255, 1);
+  //width: 450px;
+  height: 420px;
+  border-radius: 45px;
+  -moz-border-radius: 45px;
+  -webkit-border-radius: 45px;
+}
+
+.log-button {
+  background: #ff6161 !important;
+  background: rgba(255, 97, 97, 1);
+  color: #ffffff;
+  //width: 320px;
+  height: 50px;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+.forgot-pass {
+  color: #ff6161;
+  text-decoration: none;
+  font-size: small;
+}
+
+.forgot-pass a:visited {
+  text-decoration: none;
+  text-decoration-color: #ff6161;
+}
+
+.form-control-border:hover {
+  border-bottom-color: #ff6161 !important;
+}
+
+.form-control-border:focus {
+  border-bottom-color: #ff6161 !important;
+}
+
+.input-icons i {
+  position: relative;
+}
+
+.input-icons {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.icon {
+  padding: 10px;
+  min-width: 40px;
+}
+
+.input-field {
+  width: 80%;
+  padding: 10px;
+}

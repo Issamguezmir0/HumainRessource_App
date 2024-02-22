@@ -1,0 +1,187 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="title">Ajout d'un client</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Veuillez remplir les informations marquées par <span
+                                style="color: red;">*</span></h4>
+                    </div>
+                    <div class="card-body">
+                        <form ngNativeValidate [formGroup]="clientService.formforclientadd" (ngSubmit)="addClient()">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label for="client_name">Nom du client / de la société <span style="color: red;"> *
+                                        </span> :</label>
+                                    <input
+                                        [class.is-invalid]="clientService.formforclientadd.get('client_name')!.invalid && clientService.formforclientadd.get('client_name')!.touched"
+                                        type="text" class="form-control" id="client_name" placeholder=""
+                                        formControlName="client_name" required>
+                                    <small
+                                        [class.d-none]="clientService.formforclientadd.get('client_name')!.valid || clientService.formforclientadd.get('client_name')!.untouched"
+                                        class="text-danger">Nom du client obligatoire</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label for="contact_principal">Contact principal<span style="color: red;"> *
+                                        </span> :</label>
+                                    <input [ngModel] type="text" class="form-control" id="contact_principal"
+                                        placeholder="" formControlName="contact_principal" required
+                                        [class.is-invalid]="clientService.formforclientadd.get('contact_principal')!.invalid && clientService.formforclientadd.get('contact_principal')!.touched">
+                                    <small
+                                        [class.d-none]="clientService.formforclientadd.get('contact_principal')!.valid || clientService.formforclientadd.get('contact_principal')!.untouched"
+                                        class="text-danger">Il faut fournir le nom du contact principal</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label for="raison_sociale">Raison sociale <span style="color: red;"> *
+                                        </span> :</label>
+                                    <input type="text" class="form-control" id="raison_sociale" placeholder=""
+                                        formControlName="raison_sociale"
+                                        [class.is-invalid]="clientService.formforclientadd.get('raison_sociale')!.touched && clientService.formforclientadd.get('raison_sociale')!.invalid"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label for="email">Email <span style="color: red;"> *
+                                        </span> :</label>
+                                    <input
+                                        [class.is-invalid]="clientService.formforclientadd.get('email')!.invalid && clientService.formforclientadd.get('email')!.touched"
+                                        type="email" class="form-control" id="email" placeholder=""
+                                        formControlName="email" required>
+                                    <div
+                                        *ngIf="clientService.formforclientadd.get('email')!.invalid && clientService.formforclientadd.get('email')!.touched">
+                                        <small *ngIf="clientService.formforclientadd.get('email')!.errors?.required"
+                                            class="text-danger"> Email obligatoire</small>
+                                        <small *ngIf="clientService.formforclientadd.get('email')!.errors?.email"
+                                            class="text-danger"> L'adresse email doit être indiquée dans un format
+                                            approprié. </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+
+                                    <div class="col-sm-6">
+                                        <label for="site_web">Site web :</label>
+                                        <br>
+                                        <input formControlName="site_web" type="text" class="form-control"
+                                            placeholder="">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="numTelephone">N° téléphone <span style="color: red;"> *
+                                            </span> :</label>
+                                        <input
+                                            [class.is-invalid]="clientService.formforclientadd.get('numTelephone')!.touched && clientService.formforclientadd.get('numTelephone')!.invalid"
+                                            type="text" class="form-control" id="numTelephone" placeholder=""
+                                            formControlName="numTelephone" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+
+                                    <div class="col-sm-12">
+                                        <label for="adresse">Adresse <span style="color: red;"> *
+                                            </span> :</label>
+                                        <br>
+                                        <input
+                                            [class.is-invalid]="clientService.formforclientadd.get('adresse')!.touched && clientService.formforclientadd.get('adresse')!.invalid"
+                                            formControlName="adresse" type="text" class="form-control" placeholder=""
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="col-sm-4">
+                                        <label for="ville">Ville <span style="color: red;"> *
+                                            </span> :</label>
+                                        <br>
+                                        <input
+                                            [class.is-invalid]="clientService.formforclientadd.get('ville')!.touched && clientService.formforclientadd.get('ville')!.invalid"
+                                            formControlName="ville" type="text" class="form-control" placeholder=""
+                                            required>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="code_postal">Code Postal <span style="color: red;"> *
+                                            </span> :</label>
+                                        <br>
+                                        <input
+                                            [class.is-invalid]="clientService.formforclientadd.get('code_postal')!.touched && clientService.formforclientadd.get('code_postal')!.invalid"
+                                            formControlName="code_postal" type="text" class="form-control"
+                                            placeholder="" required>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="pays">Pays <span style="color: red;"> *
+                                            </span> :</label>
+                                        <br>
+                                        <input
+                                            [class.is-invalid]="clientService.formforclientadd.get('pays')!.touched && clientService.formforclientadd.get('pays')!.invalid"
+                                            formControlName="pays" type="text" class="form-control" placeholder=""
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="col-sm-6">
+                                        <label for="RIB">RIB <span style="color: red;"> *
+                                            </span> :</label>
+                                        <br>
+                                        <input
+                                            [class.is-invalid]="clientService.formforclientadd.get('RIB')!.touched && clientService.formforclientadd.get('RIB')!.invalid"
+                                            formControlName="RIB" type="text" class="form-control" placeholder=""
+                                            required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="MF">Matricule Fiscale :</label>
+                                        <br>
+                                        <input formControlName="MF" type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="col-sm-6">
+                                        <label for="RC">Registre des commerce :</label>
+                                        <br>
+                                        <input formControlName="RC" class="form-control" placeholder="">
+                                    </div>
+                                    <span class="input-group-btn" style="width:0px;"></span>
+                                    <div class="col-sm-6">
+                                        <label for="Code_TVA">Code TVA :</label>
+                                        <br>
+                                        <input formControlName="Code_TVA" type="text" class="form-control"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-app btn-add" type="submit">
+                                <i class="fas fa-plus"></i> Ajouter
+                            </button>
+
+
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

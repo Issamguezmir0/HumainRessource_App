@@ -1,0 +1,65 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="title">Demander un congé</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/Dashboard">Accueil</a></li>
+                    <li class="breadcrumb-item active">Demander congé</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-default col-md-7 mx-auto  test-card">
+                    <form [formGroup]="congeService.formAskConge">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6 test-encore">
+
+                                    <div class="form-group type">
+                                        <label>Type du congé</label>
+                                        <select class="form-control select2 select-inputs" style="width: 70%;"
+                                            formControlName="type">
+                                            <option selected="selected">Congé</option>
+                                            <option>Congé Sans Solde</option>
+                                            <option>Congé Maladie</option>
+                                            <option>Congé Familial</option>
+                                        </select>
+                                    </div>
+                                    <button type="button" class="btn test-button" (click)="AskConge()"> Soumettre
+                                        <i class="fa"></i>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <!-- 
+                                        <h1>{{range.value.start}}</h1>
+                                        <h1>{{range.value.end}}</h1> -->
+                                    <mat-card class="demo-inline-calendar-card">
+                                        <h3>Sélectionner les dates</h3>
+                                        <span class="code" *ngIf="congeService.inlineRange">
+                                            {{ congeService.inlineRange.begin | date }}
+                                            {{ congeService.inlineRange.end | date }}
+                                        </span>
+                                        <div class="inlineCalendarContainer">
+                                            <sat-calendar [rangeMode]="true"
+                                                (dateRangesChange)="inlineRangeChange($event)" [selected]="selected">
+                                            </sat-calendar>
+                                        </div>
+                                    </mat-card>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

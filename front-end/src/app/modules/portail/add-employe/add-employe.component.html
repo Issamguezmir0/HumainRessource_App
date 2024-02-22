@@ -1,0 +1,163 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6 title">
+                <h1 style="text-transform: uppercase;"><strong>ajout d'un employé</strong></h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/Dashboard">Accueil</a></li>
+                    <li class="breadcrumb-item active">Ajout d'un utilisateur</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Veuillez ajouter toutes les informations</h4>
+                    </div>
+                    <div class="card-body">
+                        <form ngNativeValidate autocomplete="false" [formGroup]="userService.formforadd"
+                            (ngSubmit)="addUserAdmin()" class="form-horizontal">
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="col-sm-6">
+                                        <label for="nom">Nom </label>
+                                        <br>
+                                        <input formControlName="nom" type="text" class="form-control" required
+                                            [value]="userService.formforadd.controls.nom.value"
+                                            [class.is-invalid]="userService.formforadd.get('nom')!.invalid && userService.formforadd.get('nom')!.touched">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="prenom">Prénom </label>
+                                        <br>
+                                        <input formControlName="prenom" type="text" class="form-control" required
+                                            [value]="userService.formforadd.controls.prenom.value"
+                                            [class.is-invalid]="userService.formforadd.get('prenom')!.invalid && userService.formforadd.get('prenom')!.touched">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="col-sm-6">
+                                        <label for="email">Email </label>
+                                        <br>
+                                        <input formControlName="email" type="email" class="form-control" required
+                                            [value]="userService.formforadd.controls.email.value"
+                                            [class.is-invalid]="userService.formforadd.get('email')!.invalid && userService.formforadd.get('email')!.touched">
+                                        <div
+                                            *ngIf="userService.formforadd.get('email')!.invalid && userService.formforadd.get('email')!.touched">
+                                            <small *ngIf="userService.formforadd.get('email')!.errors?.email"
+                                                class="text-danger"> L'adresse email doit être indiquée dans un format
+                                                approprié. </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="password">Password </label>
+                                        <br>
+                                        <input formControlName="password" type="password" class="form-control" required
+                                            [value]="userService.formforadd.controls.password.value"
+                                            autocomplete="new-password"
+                                            [class.is-invalid]="userService.formforadd.get('password')!.invalid && userService.formforadd.get('password')!.touched">
+
+                                        <div
+                                            *ngIf="userService.formforadd.get('password')!.invalid && userService.formforadd.get('password')!.touched">
+                                            <small *ngIf="userService.formforadd.get('password')!.errors?.minlength"
+                                                class="text-danger"> Il
+                                                faut au minimum 8 caractères. </small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="col-sm-6">
+                                        <label for="dateNaissance">Date de naissance </label>
+                                        <br>
+                                        <input formControlName="dateNaissance" type="date" class="form-control"
+                                            [value]="userService.formforadd.controls.dateNaissance.value" required
+                                            [class.is-invalid]="userService.formforadd.get('dateNaissance')!.invalid && userService.formforadd.get('dateNaissance')!.touched">
+                                    </div>
+                                   
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    
+                                    <div class="col-sm-6">
+                                        <label for="date_rec">Date de délivrance</label>
+                                        <br>
+                                        <input formControlName="date_cin" type="date" class="form-control"
+                                            [value]="userService.formforadd.controls.date_cin.value" required
+                                            [class.is-invalid]="userService.formforadd.get('date_cin')!.invalid && userService.formforadd.get('date_cin')!.touched">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="col-sm-6">
+                                        <label for="fonction">Fonction </label>
+                                        <br>
+                                        <input formControlName="fonction" type="text" class="form-control"
+                                            [value]="userService.formforadd.controls.fonction.value" required
+                                            [class.is-invalid]="userService.formforadd.get('fonction')!.invalid && userService.formforadd.get('fonction')!.touched">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="date_rec">Date de recrutement </label>
+                                        <br>
+                                        <input formControlName="date_rec" type="date" class="form-control"
+                                            [value]="userService.formforadd.controls.date_rec.value" required
+                                            [class.is-invalid]="userService.formforadd.get('date_rec')!.invalid && userService.formforadd.get('date_rec')!.touched">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col">
+                                    <label>Sexe</label>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="customRadio1" name="sexe" formControlName="sexe"
+                                            value="Femme" class="custom-control-input " required>
+                                        <label class="custom-control-label" for="customRadio1">Femme</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="customRadio2" name="sexe" formControlName="sexe"
+                                            value="Homme" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadio2">Homme</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <label for="role">Role de l'employé (Application)</label>
+                                    <select class="custom-select custom-select-lg mb-3" style="width: 100%;"
+                                        formControlName="role" [value]="userService.formforadd.controls.role.value"
+                                        required
+                                        [class.is-invalid]="userService.formforadd.get('role')!.invalid && userService.formforadd.get('role')!.touched">
+                                        <option selected>Employé</option>
+                                        <option>Stagiaire</option>
+                                        <option>Chef</option>
+                                        <option>Responsable</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-app btn-add-emp" type="submit">
+                                <i class="fas fa-plus"></i> Ajouter
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

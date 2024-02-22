@@ -1,0 +1,335 @@
+<section class="content-header" *ngIf="route.children.length === 0">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="title">Génération d'un document (Facture/Devis)</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/Dashboard">Accueil</a></li>
+                    <li class="breadcrumb-item active">Générer un document</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content" *ngIf="route.children.length === 0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-default col-md-5 mx-auto test-card">
+                    <div class="card-body" *ngIf="clicked == false">
+                        <form ngNativeValidate [formGroup]="factDocService.formFirst">
+                            <div class="form-group">
+                                <label>Type du document</label>
+                                <select
+                                    [class.is-invalid]="factDocService.formFirst.get('type')!.touched && factDocService.formFirst.get('type')!.invalid"
+                                    formControlName="type" class="custom-select custom-select-lg mb-3 form-control"
+                                    style="width: 100%;" required>
+                                    <option selected="selected">Devis</option>
+                                    <option>Facture</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Client</label>
+                                <select [(ngModel)]="client" formControlName="client_name"
+                                    [class.is-invalid]="factDocService.formFirst.get('client_name')!.touched && factDocService.formFirst.get('client_name')!.invalid"
+                                    class="custom-select custom-select-lg mb-3 form-control" style="width: 100%;"
+                                    required>
+                                    <option *ngFor="let client_name of all_clients;" [value]="client_name">
+                                        {{client_name}}
+                                    </option>
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Description / Object facture</label>
+                                <input [ngModel] class="form-control" type="text" class="form-control" placeholder=""
+                                    formControlName="description" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Devise</label>
+                                <select [(ngModel)]="this.factDocService.selectedDevise" formControlName="devise"
+                                    [class.is-invalid]="factDocService.formFirst.get('devise')!.touched && factDocService.formFirst.get('devise')!.invalid"
+                                    class="custom-select custom-select-lg mb-3 form-control " style="width: 100%;"
+                                    required>
+                                    <option>TND</option>
+                                    <option>EUR</option>
+                                    <option>USD</option>
+                                </select>
+                            </div>
+                            <button
+                                [disabled]="factDocService.formFirst.get('devise')!.pristine || factDocService.formFirst.get('client_name')!.pristine || factDocService.formFirst.get('type')!.pristine"
+                                type="submit" class="btn btn-valid float-right" (click)="toggle()"> Valider <i
+                                    class="fa"></i>
+                            </button>
+
+
+                        </form>
+                    </div>
+                </div>
+                <div class="card p-3 m-3" *ngIf="this.clicked == true">
+                    <div class="card-header">
+                        <h3>Veuillez ajouter les articles </h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped projects">
+                            <thead>
+                                <tr>
+                                    <th style="width: 4%">
+                                        #
+                                    </th>
+                                    <th style="width: 20%">
+                                        Prestation
+                                    </th>
+                                    <th style="width: 30%">
+                                        Description
+                                    </th>
+                                    <th style="width: 8%" class="text-center">
+                                        Prix
+                                    </th>
+                                    <th style="width: 8%" class="text-center">
+                                        TVA
+                                    </th>
+                                    <th style="width: 8%" class="text-center">
+                                        Total
+                                    </th>
+                                    <th style="width: 20%">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let article of factDocService.articles">
+                                    <td>
+                                        #
+                                    </td>
+                                    <td>
+                                        <a>
+                                            {{article.prestation}}
+                                        </a>
+                                        <br>
+                                        <small>
+                                            {{article.ref}}
+                                        </small>
+                                    </td>
+                                    <td>
+                                        {{article.description}}
+                                    </td>
+                                    <td class="project_progress text-center">
+                                        {{article.prix}} <span>{{factDocService.selectedDevise}}</span>
+                                    </td>
+                                    <td class="project-state text-center">
+                                        {{article.tva}} <span>%</span>
+                                    </td>
+                                    <td class="text-center">
+                                        {{article.total}} <span>{{factDocService.selectedDevise}}</span>
+                                    </td>
+                                    <td class="project-actions text-right ">
+                                        <a (click)="onEditArticle(articleEdit, article)" class="btn btn-sm"
+                                            style="background-color: #28395b; color: #FFFFFF;">
+                                            <i class="fas fa-pencil-alt">
+                                            </i>
+                                            Modifier
+                                        </a>
+                                        <a (click)="deleteRow(article.ref)" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash">
+                                            </i>
+                                            Supprimer
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                    <div class="card-footer row">
+
+                        <div class="col-md-12">
+
+
+                            <div class="col-md-5">
+                                <form [formGroup]="factDocService.formFirst">
+                                    <label>TVA</label>
+                                    <div class="input-group" style="width: 40%;">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <input type="checkbox" formControlName="globaltva"
+                                                    [(ngModel)]="this.factDocService.tva_checked">
+                                            </span>
+                                        </div>
+                                        <input value="0" type="number" min="0" class="form-control"
+                                            formControlName="globaltva_value" oninput="this.value = 
+                                            !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
+                                    </div>
+                                </form>
+                                <br>
+                                <br>
+                                <button type="submit" class="btn btn-add" (click)="onClickAdd(articleAdd)">
+                                    Ajouter un
+                                    article <i class="fa"></i>
+                                </button>
+                                <br>
+                                <button type="cancel" class="btn btn-success btn-validate"
+                                    routerLink="/dashboard/facturation/create-fact-document/document-resume"
+                                    [disabled]="factDocService.articles.length == 0 " (click)="toggle()">
+                                    Valider <i class="fa"></i>
+                                </button>
+                                <br>
+                                <button type="cancel" class="btn btn-precedent"
+                                    routerLink="/dashboard/facturation/create-fact-document/" (click)="toggle()">
+                                    Page précédente
+                                </button>
+                                <br>
+
+                            </div>
+                            <button type="cancel" class="btn btn-danger float-right btn-cancel"
+                                routerLink="/dashboard/facturation/create-fact-document/" (click)="cancelButton()">
+                                <i class="fas fa-undo"></i> Tout annuler
+                            </button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<router-outlet></router-outlet>
+
+<ng-template #articleAdd let-modal>
+
+    <div class="card-edit modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Ajouter un article au tableau</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form ngNativeValidate [formGroup]="factDocService.formAddArticle" class="form-horizontal"
+            (ngSubmit)="addArticle()">
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-12">
+                        <label for="prestation">Prestation :</label>
+                        <br>
+                        <input
+                            [class.is-invalid]="factDocService.formAddArticle.get('prestation')!.touched && factDocService.formAddArticle.get('prestation')!.invalid"
+                            [ngModel] type="text" class="form-control" placeholder="" formControlName="prestation"
+                            required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-12">
+                        <label for="contact_principal">Description :</label>
+                        <br>
+
+                        <textarea [ngModel] class="form-control" rows="3" placeholder="" formControlName="description"
+                            required></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-6">
+                        <label for="prix">Prix :</label>
+                        <br>
+                        <input [ngModel] type="number" class="form-control" placeholder="" required
+                            formControlName="prix" min="0.01" step="0.001">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="tva">TVA :</label>
+                        <br>
+                        <input [(ngModel)]="myTvaDefaultValue" type="number" min="0" class="form-control" placeholder=""
+                            formControlName="tva" min="0.01" max="100" step="0.001">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-outline-dark">Ajouter</button>
+            </div>
+        </form>
+    </div>
+
+</ng-template>
+
+<ng-template #articleEdit let-modal>
+
+    <div class="card-edit modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Modifier un article du tableau</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form ngNativeValidate [formGroup]="factDocService.formAddArticle" class="form-horizontal">
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-12">
+                        <label for="ref">Ref :</label>
+                        <br>
+                        <input [ngModel] type="text" class="form-control" placeholder="" formControlName="ref" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-12">
+                        <label for="prestation">Prestation :</label>
+                        <br>
+                        <input [ngModel] type="text" class="form-control" placeholder="" formControlName="prestation"
+                            required [value]="factDocService.formAddArticle.controls.prestation.value">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-12">
+                        <label for="contact_principal">Description :</label>
+                        <br>
+
+                        <textarea [ngModel] class="form-control" rows="3" placeholder="" formControlName="description"
+                            required></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-6">
+                        <label for="prix">Prix :</label>
+                        <br>
+                        <input [ngModel] type="number" class="form-control" placeholder="" required
+                            formControlName="prix" oninput="this.value = 
+                            !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="tva">TVA :</label>
+                        <br>
+                        <input [ngModel] type="number" class="form-control" placeholder="" formControlName="tva"
+                            oninput="this.value = 
+                        !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-dark"
+            (click)="updateOneArticle(factDocService.formAddArticle.controls.ref.value)">Modifier</button>
+    </div>
+
+</ng-template>

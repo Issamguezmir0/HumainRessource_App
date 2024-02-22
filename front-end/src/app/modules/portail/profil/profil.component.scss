@@ -1,0 +1,37 @@
+.card-primary.card-outline {
+  border-top: 3px solid #ff6161 !important;
+}
+
+.list-group-item a {
+  color: #ff6161 !important;
+  color: rgb(223, 97, 97);
+}
+
+.card-primary:not(.card-outline) > .card-header {
+  background-color: #ff6161 !important;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #ff6161 !important;
+}
+
+.btn-save {
+  background-color: #28395b;
+  color: #fff;
+}
+
+.btn-cancel {
+  background-color: #28395b;
+  color: #fff;
+}
+
+.title h1 {
+  font-family: Calibri;
+  font-weight: bold;
+  font-size: 40px;
+  color: #28395b;
+  color: rgb(40, 57, 91);
+  text-transform: uppercase;
+}

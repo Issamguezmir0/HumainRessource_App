@@ -1,0 +1,122 @@
+<section class="content-header" *ngIf="route.children.length === 0">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6 title">
+                <h1>Liste de mes demandes de congés</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+                    <li class="breadcrumb-item active">Demandes congés</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content" *ngIf="route.children.length === 0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <div class="card-body">
+                        <table datatable [dtOptions]="dtOptions" #congeTable id="congeTable"
+                            class="row-border order-column hover stripe" *ngIf="congeService.listConges">
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%;">Date début</th>
+                                    <th style="width: 25%;">Date fin</th>
+                                    <th style="width: 10%;">Nombre de jours</th>
+                                    <th style="width: 17%;">Type</th>
+                                    <th style="width: 15%;">Statut</th>
+                                    <th style="width: 8%;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let conge of congeService.listConges">
+                                    <td>{{conge.startDate | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{conge.endDate | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{conge.nombreJour}}</td>
+                                    <td>{{conge.type}}</td>
+                                    <td>{{conge.statut}}</td>
+                                    <td class="actions">
+                                        <button type="button" class="btn btn-warning"
+                                            (click)="onEdit(editDemande, conge)" [disabled]="conge.statut == 'Annulé' ">
+                                            <i *ngIf="conge.statut !== 'Annulé' " class="fa fa-info-circle"></i>
+                                            <i *ngIf="conge.statut == 'Annulé' " class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Date début</th>
+                                    <th>Date fin</th>
+                                    <th>Nombre de jours</th>
+                                    <th>Type</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<router-outlet></router-outlet>
+
+<ng-template #editDemande let-modal>
+
+    <div class="card-edit modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Annulation de la demande</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form [formGroup]="congeService.formManageConge">
+
+            <p>Please</p>
+            <div class="form-group">
+                <label for="id">ID :</label>
+                <br>
+                <input formControlName="id" type="text" class="form-control" placeholder="Default" required readonly>
+                <br>
+            </div>
+            <div class="form-group">
+                <label for="startDate">Date début :</label>
+                <br>
+                <input formControlName="startDate" type="date" class="form-control" placeholder="Default" required
+                    [value]="congeService.formManageConge.controls.startDate.value">
+            </div>
+            <div class="form-group">
+                <label for="endDate">Date fin :</label>
+                <br>
+                <input formControlName="endDate" type="date" class="form-control" placeholder="Default" required
+                    [value]="congeService.formManageConge.controls.endDate.value">
+            </div>
+            <div class="form-group">
+                <label for="type">Type :</label>
+                <br>
+                <input formControlName="type" type="text" class="form-control" placeholder="Default" required
+                    [value]="congeService.formManageConge.controls.type.value">
+            </div>
+            <div class="form-group">
+                <label>Statut :</label>
+                <select class="form-control" formControlName="statut"
+                    [value]="congeService.formManageConge.controls.statut.value">
+                    <option>Annulé</option>
+
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" (click)="Cancel()">Valider</button>
+            </div>
+        </form>
+    </div>
+
+</ng-template>

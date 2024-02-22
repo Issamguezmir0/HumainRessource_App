@@ -1,0 +1,56 @@
+.card-primary.card-outline {
+  border-top: 3px solid #ff6161 !important;
+}
+
+.list-group-item a {
+  color: #ff6161 !important;
+  color: rgb(223, 97, 97);
+}
+
+.bg-gradient-success {
+  background: #ffffff linear-gradient(180deg, #ffffff, #ffffff) repeat-x !important;
+  color: rgb(170, 152, 211);
+}
+
+.bg-change {
+  background-color: #df6161;
+  color: #fff;
+}
+
+.card.bg-gradient-success .bootstrap-datetimepicker-widget table td.active {
+  background-color: #ff6161;
+  color: #fff;
+}
+
+.card.bg-gradient-success .bootstrap-datetimepicker-widget table td.day:hover,
+.card.bg-gradient-success
+  .bootstrap-datetimepicker-widget
+  table
+  thead
+  tr:first-child
+  th:hover,
+.btn-success:not(:disabled):not(.disabled):active,
+.show > .btn-success.dropdown-toggle {
+  background-color: #ff6161;
+  color: #fff;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #ff6161;
+  border-color: #ff6161;
+  box-shadow: none;
+}
+
+.title h1 {
+  font-family: Calibri;
+  font-weight: bold;
+  font-size: 40px;
+  color: #28395b;
+  color: rgb(40, 57, 91);
+  text-transform: uppercase;
+}
+
+.card-footer a {
+  color: #ff6161;
+}

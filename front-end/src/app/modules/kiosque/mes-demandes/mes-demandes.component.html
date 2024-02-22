@@ -1,0 +1,86 @@
+<section class="content-header" *ngIf="route.children.length === 0">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6 title">
+                <h1>MES DEMANDES DE DOCUMENT</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/Dashboard">Accueil</a></li>
+                    <li class="breadcrumb-item active">Liste des demandes</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content" *ngIf="route.children.length === 0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <div class="card-body">
+                        <table datatable [dtOptions]="dtOptions" #profileTable id="profiletable"
+                            class="row-border order-column hover stripe" *ngIf="DocumentRhService.listDocsRh">
+                            <thead>
+                                <tr>
+
+                                    <th>Titre</th>
+                                    <th>Type</th>
+                                    <th>Date Demande</th>
+                                    <th>Date Envoi</th>
+                                    <th style="width: 10%;">Document</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let docsRh of DocumentRhService.listDocsRh">
+
+                                    <td>{{docsRh.titre}}
+                                    </td>
+                                    <td>{{docsRh.type}}</td>
+                                    <td>{{docsRh.dateDemande | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{docsRh.dateEnvoi | date: 'dd/MM/yyyy'}}</td>
+                                    <td class="download">
+                                        <a *ngIf="docsRh.withLink == true" class="btn btn-app bg-danger testbtn"
+                                            (click)="downloadPdf(docsRh.documentLink, 'document')">
+                                            <i class="fas fa-file-pdf testicon"></i>
+                                        </a>
+                                    </td>
+                                    <td style="width: 4%;">
+                                        <div *ngIf="docsRh.withLink == null">
+                                            <button class="btn btn-danger" (click)="deleteDocument(docsRh._id)"><i
+                                                    class="fa fa-trash"></i></button>
+                                        </div>
+                                        <div *ngIf="docsRh.withLink == true">
+                                            <button class="btn btn-danger" (click)="deleteDocument(docsRh._id)"><i
+                                                    class="fa fa-trash"></i></button>
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Titre</th>
+                                    <th>Type</th>
+                                    <th>Date Demande</th>
+                                    <th>Date Envoi</th>
+                                    <th>Document</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div style="padding-top: 30px;">
+                            <button routerLink="/dashboard/kiosque/mes-demandes/ask-for-document" type="submit"
+                                class="btn btn-add float-right">Demander un document</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<router-outlet></router-outlet>

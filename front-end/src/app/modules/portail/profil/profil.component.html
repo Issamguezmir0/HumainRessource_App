@@ -1,0 +1,389 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6 title">
+                <h1>Mon profil</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+                    <li class="breadcrumb-item active">Mon profil</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+
+                <!-- Profile Image -->
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle"
+                               [src]=profileImage
+                                alt="User profile picture">
+                        </div>
+
+                        <h3 class="profile-username text-center">{{authService.loggedInUser.nom}}
+                            {{authService.loggedInUser.prenom}}</h3>
+
+                        <p class="text-muted text-center">{{authService.loggedInUser.fonction}}</p>
+
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Username</b> <a class="float-right">{{username}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Email</b> <a class="float-right">{{email}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Date de naissance</b> <a class="float-right">{{authService.loggedInUser.dateNaissance
+                                    | date: 'dd/MM/yyyy'}}</a>
+                            </li>
+
+                            <li class="list-group-item">
+                                <b>Date de recrutement</b> <a class="float-right">{{authService.loggedInUser.date_rec |
+                                    date: 'dd/MM/yyyy'}}</a>
+                            </li>
+
+                            <li class="list-group-item">
+                                <b>Sexe</b> <a class="float-right">{{authService.loggedInUser.sexe}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+                <!-- About Me Box -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">A propos de moi</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <strong><i class="fas fa-book mr-1"></i> Education</strong>
+
+                        <p class="text-muted">
+                            {{authService.loggedInUser.experience}}
+                        </p>
+
+                        <hr>
+
+                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Adresse</strong>
+
+                        <p class="text-muted">{{authService.loggedInUser.ville}}, {{authService.loggedInUser.pays}}</p>
+
+                        <hr>
+
+                        <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                        <p class="text-muted">
+                            <span class="tag tag-danger">{{authService.loggedInUser.skills}}</span>
+                        </p>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#timeline"
+                                    data-toggle="tab">Historique</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Réglages</a>
+                            </li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+
+                            <!-- <div class="active tab-pane" id="timeline">
+
+                                <div class="timeline timeline-inverse">
+
+                                    <div class="time-label">
+                                        <span class="bg-danger">
+                                            10 Feb. 2014
+                                        </span>
+                                    </div>
+
+
+                                    <div>
+                                        <i class="fas fa-envelope bg-primary"></i>
+
+                                        <div class="timeline-item">
+                                            <span class="time"><i class="far fa-clock"></i> 12:05</span>
+
+                                            <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email
+                                            </h3>
+
+                                            <div class="timeline-body">
+                                                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                                                weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                                                jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                                                quora plaxo ideeli hulu weebly balihoo...
+                                            </div>
+                                            <div class="timeline-footer">
+                                                <a href="#" class="btn btn-primary btn-sm">Read more</a>
+                                                <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <i class="fas fa-user bg-info"></i>
+
+                                        <div class="timeline-item">
+                                            <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
+
+                                            <h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted
+                                                your friend request
+                                            </h3>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <i class="fas fa-comments bg-warning"></i>
+
+                                        <div class="timeline-item">
+                                            <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
+
+                                            <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post
+                                            </h3>
+
+                                            <div class="timeline-body">
+                                                Take me to your leader!
+                                                Switzerland is small and neutral!
+                                                We are more like Germany, ambitious and misunderstood!
+                                            </div>
+                                            <div class="timeline-footer">
+                                                <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="time-label">
+                                        <span class="bg-success">
+                                            3 Jan. 2014
+                                        </span>
+                                    </div>
+
+                                    <div>
+                                        <i class="fas fa-camera bg-purple"></i>
+
+                                        <div class="timeline-item">
+                                            <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
+
+                                            <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos
+                                            </h3>
+
+                                            <div class="timeline-body">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <i class="far fa-clock bg-gray"></i>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- /.tab-pane -->
+
+                            <div class="tab-pane" id="settings">
+                                <form [formGroup]="authService.editProfile" class="form-horizontal"
+                                    *ngIf="this.clicked == false">
+
+                                    <div class="form-group row" hidden>
+                                        <label for="id" class="col-sm-2 col-form-label">ID</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="id" placeholder="Skills"
+                                                formControlName="id" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="input-group">
+                                            <label class="col-sm-2 col-form-label" for="nom">Nom</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="nom" placeholder=""
+                                                    formControlName="nom" required>
+                                            </div>
+
+                                            <label class="col-sm-1 col-form-label" for="prenom">Prénom</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" id="prenom" placeholder=""
+                                                    formControlName="prenom" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="input-group">
+                                            <label for="dateNaissance" class="col-sm-2 col-form-label">Date de
+                                                naissance</label>
+                                            <div class="col-sm-4">
+                                                <input type="date" class="form-control" id="dateNaissance"
+                                                    formControlName="dateNaissance">
+                                            </div>
+                                            <label for="numTelephone" class="col-sm-1 col-form-label">N°
+                                                Téléphone</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" id="numTelephone"
+                                                    formControlName="numTelephone">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="input-group">
+                                            <label for="adresse" class="col-sm-2 col-form-label">Adresse</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="adresse"
+                                                    formControlName="adresse">
+                                            </div>
+                                            <label for="ville" class="col-sm-1 col-form-label">Ville</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control" id="ville"
+                                                    formControlName="ville">
+                                            </div>
+                                            <label for="pays" class="col-sm-1 col-form-label">Pays</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control" id="pays"
+                                                    formControlName="pays">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="input-group">
+                                            <label for="statutConjuguale" class="col-sm-2 col-form-label">Statut
+                                                conjuguale</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="statutConjuguale"
+                                                    formControlName="statutConjuguale">
+                                            </div>
+                                            <label for="nbEnfants" class="col-sm-1 col-form-label">N°
+                                                Enfants</label>
+                                            <div class="col-sm-5">
+                                                <input
+                                                    onkeypress=" (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                                    type="number" class="form-control" id="nbEnfants"
+                                                    formControlName="nbEnfants">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputExperience" class="col-sm-2 col-form-label">Education</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="inputExperience" placeholder="Experience"
+                                                formControlName="experience"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputSkills"
+                                                placeholder="Skills" formControlName="skills">
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                                  <form [formGroup]="form" (submit)="modifyPhoto()" >
+                                    <div class="form-group row">
+                                      <div class="offset-sm-2 col-sm-10">
+                                          <button (click)="updateInfos()" type="submit"
+                                              class="btn btn-save">Enregistrer</button>
+                                          <button (click)="toggle()" type="submit"
+                                              class="btn btn-danger float-right">Modifier mon mot de passe</button>
+                                              <input id="img" type="file"
+                                              class="btn btn-danger float-right" (change)="updatePhoto($event)">
+                                      </div>
+                                  </div>
+                                  <button type="submit" class="btn btn-danger float-right">modifier la photo</button>
+                                  </form>
+                                <form ngNativeValidate [formGroup]="authService.formNewPassword" class="form-horizontal"
+                                    *ngIf="this.clicked == true" novalidate autocomplete="off">
+
+                                    <div class="form-group row">
+                                        <!-- <label for="password" class="col-sm-4 col-form-label">Ancien mot de
+                                            passe</label>
+                                        <div class="col-sm-8">
+                                            <input type="password" class="form-control" id="password" placeholder=""
+                                                formControlName="password">
+                                        </div> -->
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="newPass" class="col-sm-4 col-form-label">Nouveau mot de
+                                            passe</label>
+                                        <div class="col-sm-8">
+                                            <input type="password" class="form-control" id="newPass"
+                                                formControlName="newPass"
+                                                [class.is-invalid]="authService.formNewPassword.get('newPass')!.touched && authService.formNewPassword.get('newPass')!.invalid">
+
+                                            <div *ngIf="authService.formNewPassword.get('newPass')!.touched">
+                                                <small class="text-danger"
+                                                    *ngIf="authService.formNewPassword.get('newPass')!.errors?.required">
+                                                    Mot de passe incorrect</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="confirmPass" class="col-sm-4 col-form-label">Confirmer le
+                                            mot de passe</label>
+                                        <div class="col-sm-8">
+                                            <input type="password" class="form-control" id="confirmPass"
+                                                formControlName="confirmPassword"
+                                                [class.is-invalid]="authService.formNewPassword.get('confirmPassword')!.touched && authService.formNewPassword.get('confirmPassword')!.invalid">
+                                            <small class="text-danger"
+                                                *ngIf="authService.formNewPassword.errors?.misMatch">
+                                                Mot de passe incorrect</small>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="offset-sm-4 col-sm-8">
+                                            <button [disabled]="authService.formNewPassword.errors?.misMatch"
+                                                (click)="updatePassword()" type="submit"
+                                                class="btn btn-danger">Enregistrer</button>
+                                            <button (click)="toggle()"
+                                                class="btn btn-cancel float-right">Retour</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+
+
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+
+            <div class="col-md-9">
+                <div class="card"></div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>

@@ -1,0 +1,163 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6 title">
+                <h1><strong>CONSULTATION/VALIDATION</strong> DES DEMANDES DES EMPLOYES</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/Dashboard">Accueil</a></li>
+                    <li class="breadcrumb-item active">Liste des demandes</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <div class="card-body">
+                        <table datatable [dtOptions]="dtOptions" *ngIf="DocumentRhService.listAskedDocsRh"
+                            class="row-border order-column hover stripe">
+                            <thead>
+                                <tr>
+                                    <th>Demandée par</th>
+                                    <th>Titre</th>
+                                    <th>Type</th>
+                                    <th>Date Demande</th>
+                                    <th>Date Envoi</th>
+                                    <th style="width: 10%;">Actions</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let docsRh of DocumentRhService.listAskedDocsRh">
+
+                                    <td>{{docsRh.askedBy.prenom}} {{docsRh.askedBy.nom}}</td>
+                                    <td>{{docsRh.titre}}</td>
+                                    <td>{{docsRh.type}}</td>
+                                    <td>{{docsRh.dateDemande | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{docsRh.dateEnvoi | date: 'dd/MM/yyyy'}}</td>
+                                    <td class="btn-group testa">
+                                        <button
+                                            [ngClass]="{'btn-success': docsRh.withLink == true, 'btn-warning': docsRh.withLink == null}"
+                                            type="button" class="btn " (click)="onEdit(ValidateDocument, docsRh)"
+                                            [disabled]="docsRh.withLink == true">
+                                            <i *ngIf="docsRh.withLink == true" class="fa fa-check"></i>
+                                            <i *ngIf="docsRh.withLink == null" class="fa fa-exclamation"></i>
+                                        </button>
+
+                                    </td>
+                                    <td style="width: 4%;"><button class="btn btn-danger"
+                                            (click)="deleteDocument(docsRh._id)"><i class="fa fa-trash"></i></button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <th>Demandée par</th>
+                                    <th>Titre</th>
+                                    <th>Type</th>
+                                    <th>Date Demande</th>
+                                    <th>Date Envoi</th>
+                                    <th>Actions</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<ng-template #ValidateDocument let-modal>
+
+    <div class="card-edit modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Génération du document</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form ngNativeValidate [formGroup]="DocumentRhService.formForValidation" (ngSubmit)="GenerateDocument()">
+
+            <div class="form-group" hidden>
+                <label for="id">ID :</label>
+                <br>
+                <input formControlName="id" type="text" class="form-control" required readonly>
+                <br>
+            </div>
+            <div class="form-group">
+                <label for="prenom">Document demandé :</label>
+                <br>
+                <input formControlName="titre" type="text" class="form-control" readonly>
+                <br>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="">Employé :</span>
+                    </div>
+                    <input type="text" class="form-control" formControlName="nom" readonly>
+                    <input type="text" class="form-control" formControlName="prenom" readonly>
+                    <br>
+                </div>
+                <br>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Commentaire :</span>
+                    </div>
+                    <textarea class="form-control" formControlName="commentaire" readonly></textarea>
+                </div>
+            </div>
+            <div class="form-group"
+                *ngIf="DocumentRhService.formForValidation.controls.titre.value == 'Attestation de stage'">
+                <div class="input-group">
+                    <div class="col-sm-4">
+                        <label for="mois">Nombre de mois <span style="color: red;"> *
+                            </span> :</label>
+                        <br>
+                        <input formControlName="mois" type="number" class="form-control" placeholder="" required min="1"
+                            max="12" step="1">
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="debut_stage">Du <span style="color: red;"> *
+                            </span> :</label>
+                        <br>
+                        <input formControlName="debut_stage" type="date" class="form-control" placeholder="" required>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="fin_stage">Au <span style="color: red;"> *
+                            </span> :</label>
+                        <br>
+                        <input formControlName="fin_stage" type="date" class="form-control" placeholder="" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="emailCheck" formControlName="withEmail">
+                <label class="custom-control-label" for="emailCheck">Souhaiteriez vous l'envoyer par email?</label>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-outline-dark">Valider</button>
+            </div>
+
+        </form>
+    </div>
+
+
+
+</ng-template>

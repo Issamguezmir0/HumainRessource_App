@@ -1,0 +1,229 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6 ">
+                <h1 class="title">Liste des clients</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+                    <li class="breadcrumb-item active">Liste des clients</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <!-- <div class="card-header">
+                        <h4 class="card-title">Vous trouverez ci-dessous la liste de tous les clients</h4>
+                    </div> -->
+
+                    <div class="card-body">
+                        <table datatable [dtOptions]="dtOptions" #profileTable id="profiletable" class="display hover"
+                            *ngIf="clientService.listClient" style="width:100%">
+                            <thead class="test">
+                                <tr>
+                                    <th>NOM DU CLIENT</th>
+                                    <th>RAISON SOCIALE</th>
+                                    <th>CONTACT PRINCIPAL</th>
+                                    <th>EMAIL</th>
+                                    <th>ADRESSE</th>
+                                    <th>CONTACT</th>
+                                    <th>ACTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let client of clientService.listClient">
+                                    <td style="text-transform: uppercase;">{{client.client_name}}</td>
+                                    <td>{{client.raison_sociale}}</td>
+                                    <td>{{client.contact_principal}}</td>
+                                    <td>{{client.email}}</td>
+                                    <td>{{client.ville}} {{client.code_postal}}, {{client.pays}}</td>
+                                    <td>{{client.numTelephone}}</td>
+                                    <td class="actions">
+                                        <button type="button" class="btn btn-sm btn-edit"
+                                            (click)="onEdit(clientEdit, client)">
+
+                                            <i class="fas fa-pencil-alt" style="color: white;"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                            (click)="deleteOneClient(client._id)"><i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>NOM DU CLIENT</th>
+                                    <th>RAISON SOCIALE</th>
+                                    <th>CONTACT PRINCIPAL</th>
+                                    <th>EMAIL</th>
+                                    <th>ADRESSE</th>
+                                    <th>CONTACT</th>
+                                    <th>ACTIONS</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div style="padding-top: 30px;">
+                            <button *ngIf="authService.getRole() === 'admin'"
+                                routerLink="/dashboard/facturation/list-clients/add-client" type="submit"
+                                class="btn btn-add float-right">Ajouter un nouveau
+                                client</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<router-outlet></router-outlet>
+
+<ng-template #clientEdit let-modal>
+
+    <div class="card-edit modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Modifier les informations du client</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form [formGroup]="clientService.formforclientedit" class="form-horizontal">
+
+            <div class="form-group" hidden>
+                <label for="id">ID :</label>
+                <br>
+                <input formControlName="id" type="text" class="form-control" required readonly>
+
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-12">
+                        <label for="client_name">Nom du client :</label>
+                        <br>
+                        <input formControlName="client_name" type="text" class="form-control" required readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-12">
+                        <label for="contact_principal">Contact principal :</label>
+                        <br>
+                        <input formControlName="contact_principal" type="text" class="form-control"
+                            placeholder="Default" required
+                            [value]="clientService.formforclientedit.controls.contact_principal.value">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-6">
+                        <label for="email">Email :</label>
+                        <br>
+                        <input formControlName="email" type="text" class="form-control" required
+                            [value]="clientService.formforclientedit.controls.email.value">
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-6">
+                        <label for="numTelephone">Numéro de téléphone :</label>
+                        <br>
+                        <input formControlName="numTelephone" type="text" class="form-control" required
+                            [value]="clientService.formforclientedit.controls.numTelephone.value">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="site_web">Site web :</label>
+                        <br>
+                        <input formControlName="site_web" type="text" class="form-control" required
+                            [value]="clientService.formforclientedit.controls.site_web.value">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <label for="adresse">Adresse :</label>
+                    <br>
+                    <input formControlName="adresse" type="text" class="form-control" required
+                        [value]="clientService.formforclientedit.controls.adresse.value">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-4">
+                        <label for="ville">Ville</label>
+                        <br>
+                        <input formControlName="ville" type="text" class="form-control" placeholder="" required
+                            [value]="clientService.formforclientedit.controls.ville.value">
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="code_postal">Code Postal</label>
+                        <br>
+                        <input formControlName="code_postal" type="text" class="form-control" placeholder="" required
+                            [value]="clientService.formforclientedit.controls.code_postal.value">
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="pays">Pays </label>
+                        <br>
+                        <input formControlName="pays" type="text" class="form-control" placeholder="" required
+                            [value]="clientService.formforclientedit.controls.pays.value">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-6">
+                        <label for="RIB">RIB </label>
+                        <br>
+                        <input formControlName="RIB" type="text" class="form-control" required
+                            [value]="clientService.formforclientedit.controls.RIB.value">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="MF">Matricule fiscale </label>
+                        <br>
+                        <input formControlName="MF" type="text" class="form-control" required
+                            [value]="clientService.formforclientedit.controls.MF.value">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="col-sm-6">
+                        <label for="RC">Registre de commerce</label>
+                        <br>
+                        <input formControlName="RC" class="form-control" required
+                            [value]="clientService.formforclientedit.controls.RC.value">
+                    </div>
+                    <span class="input-group-btn" style="width:0px;"></span>
+                    <div class="col-sm-6">
+                        <label for="Code_TVA">Code TVA</label>
+                        <br>
+                        <input formControlName="Code_TVA" type="text" class="form-control" required
+                            [value]="clientService.formforclientedit.controls.Code_TVA.value">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="updateClient()">Modifier</button>
+    </div>
+
+</ng-template>

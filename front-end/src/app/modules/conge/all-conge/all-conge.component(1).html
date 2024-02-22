@@ -1,0 +1,145 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6 title">
+                <h1><strong>CONSULTATION/VALIDATION</strong> DES DEMANDES DE CONGES</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+                    <li class="breadcrumb-item active">Demandes congés</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div>
+
+                    <div class="card-body">
+                        <table datatable [dtOptions]="dtOptions" #congeTable id="congeTable"
+                            class="row-border order-column hover stripe" *ngIf="congeService.listConges">
+                            <thead>
+                                <tr>
+                                    <th>Demandée par</th>
+                                    <th>Date début</th>
+                                    <th>Date fin</th>
+                                    <th>Nombre de jours</th>
+                                    <th>Type</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let conge of congeService.listConges">
+
+                                    <td>{{conge.empNom.prenom}} {{conge.empNom.nom}}</td>
+                                    <td>{{conge.startDate | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{conge.endDate | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{conge.nombreJour}}</td>
+                                    <td>{{conge.type}}</td>
+                                    <td>{{conge.statut}}</td>
+                                    <td class="actions">
+                                        <button type="button" class="btn btn-success"
+                                            (click)="onEdit(ManageConge, conge)"
+                                            [disabled]="conge.statut != 'en attente'">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger" (click)="Cancel()"
+                                            [disabled]="conge.statut == 'Refusée'"><i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Demandée par</th>
+                                    <th>Date début</th>
+                                    <th>Date fin</th>
+                                    <th>Nombre de jours</th>
+                                    <th>Type</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<ng-template #ManageConge let-modal>
+
+    <div class="card-edit modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Modifier le statut du congé</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form [formGroup]="congeService.formManageConge">
+            <div class="form-group" hidden>
+                <label for="id">ID :</label>
+                <br>
+                <input formControlName="id" type="text" class="form-control" placeholder="Default" required readonly>
+                <br>
+            </div>
+            <!-- <div class="form-group">
+                <label for="nom">Nom :</label>
+                <br>
+                <input formControlName="nom" type="text" class="form-control" placeholder="Default" required
+                    [value]="congeService.formManageConge.controls.nom.value" readonly>
+                <br>
+            </div>
+            <div class="form-group">
+                <label for="prenom">Prénom :</label>
+                <br>
+                <input formControlName="prenom" type="text" class="form-control" placeholder="Default" required
+                    [value]="congeService.formManageConge.controls.prenom.value">
+                <br>
+            </div> -->
+            <div class="form-group">
+                <label for="startDate">Date début :</label>
+                <br>
+                <input formControlName="startDate" type="text" class="form-control" placeholder="Default" required
+                    [value]="congeService.formManageConge.controls.startDate.value">
+            </div>
+            <div class="form-group">
+                <label for="endDate">Date fin :</label>
+                <br>
+                <input formControlName="endDate" type="text" class="form-control" placeholder="Default" required
+                    [value]="congeService.formManageConge.controls.endDate.value">
+            </div>
+            <div class="form-group">
+                <label for="type">Type :</label>
+                <br>
+                <input formControlName="type" type="text" class="form-control" placeholder="Default" required
+                    [value]="congeService.formManageConge.controls.type.value">
+            </div>
+            <div class="form-group">
+                <label>Statut :</label>
+                <select class="form-control" formControlName="statut"
+                    [value]="congeService.formManageConge.controls.statut.value" required>
+                    <option>Validé</option>
+                    <option>Refusée</option>
+                    <option>Annulé</option>
+
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-outline-dark" (click)="Validate()">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+
+
+
+</ng-template>

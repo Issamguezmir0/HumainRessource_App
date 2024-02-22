@@ -1,0 +1,53 @@
+.download {
+  text-align: center !important;
+}
+
+.testbtn {
+  height: 60px !important;
+  min-width: 60px !important;
+  font-size: 8px !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+}
+
+.testicon {
+  font-size: 30px !important;
+  text-align: center;
+}
+
+td {
+  text-align: center !important;
+  text-transform: uppercase;
+}
+
+.testa {
+  display: flex !important;
+  justify-content: center !important;
+  border: none !important;
+  width: 80% !important;
+}
+
+.title h1 {
+  font-family: Calibri;
+  font-weight: bold;
+  font-size: 40px;
+  color: #28395b;
+  color: rgb(40, 57, 91);
+}
+
+thead,
+tfoot {
+  background: #df6161;
+  background: rgba(223, 97, 97, 1);
+  font-family: Calibri;
+}
+
+th {
+  color: white !important;
+  text-transform: uppercase;
+}
+
+.btn-edit {
+  background-color: #28395b;
+  color: #ffffff;
+}

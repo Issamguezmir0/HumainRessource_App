@@ -1,0 +1,34 @@
+.testa {
+  display: flex !important;
+  justify-content: center !important;
+  border: none !important;
+  //padding-right: 50px !important;
+  //padding-left: 50px !important;
+  width: 80% !important;
+}
+
+td {
+  text-align: center !important;
+  text-transform: uppercase;
+}
+
+.title h1 {
+  font-family: Calibri;
+
+  font-size: 40px;
+  color: #28395b;
+  color: rgb(40, 57, 91);
+}
+
+thead,
+tfoot {
+  background: #df6161;
+  background: rgba(223, 97, 97, 1);
+  font-family: Calibri;
+}
+
+th {
+  color: white !important;
+  text-transform: uppercase;
+  font-size: 15px;
+}
